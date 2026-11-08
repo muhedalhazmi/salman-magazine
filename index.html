@@ -33,9 +33,41 @@
     @media(max-width:760px){.student-letter{padding:22px}.student-letter-copy p{font-size:14px;line-height:1.95}.council-members{grid-template-columns:repeat(2,minmax(0,1fr))}.council-details{grid-template-columns:1fr}}
     @media(max-width:760px){.quiz-options{grid-template-columns:1fr}.quiz-option{text-align:center}.quiz-entry{grid-template-columns:1fr}.quiz-entry .btn{width:100%}.quiz-certificate{min-height:380px;padding:15px}.certificate-inner{padding:18px}.certificate-copy{font-size:14px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+    body.welcome-open{overflow:hidden}
+    .welcome-overlay[hidden]{display:none}
+    .welcome-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:16px;background:linear-gradient(145deg,#8ed1fa,#c8e8ff 60%,#d8f2ef);overflow:auto}
+    .welcome-panel{width:min(660px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:clamp(16px,4vw,30px);border:1px solid #ffffff;border-radius:30px;background:#fff;text-align:center;box-shadow:0 18px 0 #6eacd133,0 28px 70px #164b6540}
+    .welcome-cover{display:block;width:min(390px,100%);height:min(38dvh,430px);min-height:170px;margin:0 auto 12px;object-fit:contain;border-radius:18px}
+    .welcome-panel h1{margin:7px 0;color:#124b82;font-size:clamp(26px,5.5vw,38px);line-height:1.4}
+    .welcome-panel p{margin:4px 0 16px;color:#526780;font-size:clamp(15px,3vw,19px)}
+    .welcome-choices{display:grid;gap:11px;margin-top:12px}
+    .welcome-enter{width:100%;min-height:66px;padding:12px 16px;border:0;border-radius:16px;background:#16994f;color:#fff;font:inherit;font-size:clamp(18px,4vw,24px);font-weight:800;box-shadow:0 5px 0 #08763a;cursor:pointer}
+    .welcome-enter:hover{background:#118b46}
+    .welcome-silent{justify-self:center;padding:8px 15px;border:0;background:transparent;color:#1463a4;font:inherit;font-size:17px;font-weight:800;text-decoration:underline;cursor:pointer}
+    .welcome-credit{margin:8px 0 0!important;color:#70828c!important;font-size:11px!important;line-height:1.6}
+    .welcome-credit a{color:#176e83;text-decoration:underline}
+    .anthem-control{position:fixed;z-index:500;inset:auto auto 16px 16px}
+    .anthem-control[hidden]{display:none}
+    .anthem-control button{padding:10px 15px;border:1px solid #ffffff88;border-radius:99px;background:#064c43;color:#fff;font:inherit;font-size:13px;font-weight:700;box-shadow:0 5px 18px #001e1b40;cursor:pointer}
+    @media(max-width:560px){.welcome-overlay{padding:10px}.welcome-panel{max-height:calc(100dvh - 20px);padding:14px;border-radius:23px}.welcome-cover{height:min(34dvh,330px);min-height:145px;margin-bottom:6px}.welcome-panel p{margin-bottom:10px}.welcome-enter{min-height:58px}.welcome-silent{font-size:15px}.welcome-credit{font-size:10px!important}.anthem-control{inset:auto auto 10px 10px}}
+    @media(max-height:620px){.welcome-cover{height:28dvh;min-height:120px}.welcome-panel{padding:12px}.welcome-panel h1{font-size:24px}.welcome-panel p{margin:2px 0 8px}.welcome-choices{gap:7px}.welcome-enter{min-height:50px}}
   </style>
 </head>
 <body>
+  <div class="welcome-overlay" id="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+    <section class="welcome-panel">
+      <img class="welcome-cover" src="assets/magazine-cover.png" alt="غلاف مجلة التوجيه الطلابي بمدرسة سلمان الفارسي الابتدائية">
+      <h1 id="welcome-title">أهلًا بك في مجلتنا</h1>
+      <p>مجلة التوجيه الطلابي بمدرسة سلمان الفارسي الابتدائية</p>
+      <div class="welcome-choices">
+        <button class="welcome-enter" id="enter-with-anthem" type="button">♫ ادخل المجلة مع النشيد الوطني</button>
+        <button class="welcome-silent" id="enter-without-anthem" type="button">ادخل بدون صوت</button>
+      </div>
+      <p class="welcome-credit">النسخة الصوتية عزف موسيقي للنشيد الوطني · <a href="https://commons.wikimedia.org/wiki/File:Saudi_Arabian_national_anthem,_performed_by_the_United_States_Navy_Band.oga" target="_blank" rel="noopener noreferrer">المصدر والترخيص</a></p>
+    </section>
+  </div>
+  <audio id="national-anthem" preload="none" src="assets/anthem/saudi-national-anthem.mp3" aria-label="عزف النشيد الوطني السعودي"></audio>
+  <div class="anthem-control" id="anthem-control" hidden><button id="anthem-toggle" type="button" aria-label="إيقاف النشيد الوطني">⏸ إيقاف النشيد</button></div>
   <header>
     <div class="school-banner"><div class="school-banner-inner"><div class="school-logo-frame"><img src="assets/salman-school-logo.png" alt="شعار مدرسة سلمان الفارسي الابتدائية"></div><div class="school-title"><span class="title-ministry">وزارة التعليم</span><span class="title-district">إدارة التعليم بمحافظة جدة</span><span class="title-school">مدرسة سلمان الفارسي الابتدائية</span></div><div class="school-ministry"><img src="assets/ministry.svg" alt="شعار وزارة التعليم"></div></div></div>
     <div class="mast"><div class="wrap mastrow">
@@ -167,6 +199,30 @@
     quizNext.addEventListener('click',()=>{if(quizNext.disabled)return;if(quizIndex<quizRound.length-1){quizIndex++;renderQuizQuestion();return}document.getElementById('certificate-student').textContent=quizStudentName;document.getElementById('certificate-score').textContent=`النتيجة: ${quizScore} من ${quizRound.length}`;document.getElementById('certificate-date').textContent=`${new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{dateStyle:'long'}).format(new Date())} · التوجيه الطلابي`;quizPlay.hidden=true;quizCertificate.classList.add('is-visible');quizProgressFill.style.width='100%';quizCertificate.scrollIntoView({behavior:'smooth',block:'center'})});
     document.getElementById('certificate-print').addEventListener('click',()=>window.print());document.getElementById('quiz-restart').addEventListener('click',()=>{quizCertificate.classList.remove('is-visible');quizPlay.hidden=true;quizEntry.hidden=false;document.getElementById('quiz-name').value='';document.getElementById('quiz-name').focus()});
     const nav=document.getElementById('nav'),toggle=document.getElementById('navtoggle');toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open))});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle.setAttribute('aria-expanded','false')}));
+  </script>
+  <script>
+    (()=>{
+      const gate=document.getElementById('welcome-overlay');
+      const audio=document.getElementById('national-anthem');
+      const soundButton=document.getElementById('enter-with-anthem');
+      const silentButton=document.getElementById('enter-without-anthem');
+      const control=document.getElementById('anthem-control');
+      const toggle=document.getElementById('anthem-toggle');
+      const closeGate=()=>{gate.hidden=true;document.body.classList.remove('welcome-open');try{sessionStorage.setItem('salmanMagazineEntered','yes')}catch{}};
+      let entered=false;try{entered=sessionStorage.getItem('salmanMagazineEntered')==='yes'}catch{}
+      if(entered){gate.hidden=true}else{document.body.classList.add('welcome-open')}
+      soundButton.addEventListener('click',()=>{
+        closeGate();control.hidden=false;
+        const playback=audio.play();
+        if(playback&&typeof playback.catch==='function')playback.catch(()=>{control.hidden=true});
+      });
+      silentButton.addEventListener('click',closeGate);
+      toggle.addEventListener('click',()=>{
+        if(audio.paused){audio.play().then(()=>{toggle.textContent='⏸ إيقاف النشيد';toggle.setAttribute('aria-label','إيقاف النشيد الوطني')}).catch(()=>{});return}
+        audio.pause();toggle.textContent='▶ تشغيل النشيد';toggle.setAttribute('aria-label','تشغيل النشيد الوطني');
+      });
+      audio.addEventListener('ended',()=>{control.hidden=true});
+    })();
   </script>
 </body>
 </html>
