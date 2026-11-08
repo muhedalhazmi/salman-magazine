@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">استبانات المدرسة</title>
+  <desc id="desc">نموذج استبانة مع خانات اختيار وعلامة إتمام</desc>
+  <rect x="28" y="20" width="124" height="144" rx="20" fill="#E8F3EE"/>
+  <rect x="42" y="34" width="96" height="118" rx="14" fill="#fff" stroke="#0B786B" stroke-width="4"/>
+  <path d="M65 34v-7a12 12 0 0 1 24 0v7" stroke="#D4AE53" stroke-width="6" stroke-linecap="round"/>
+  <path d="m56 69 6 6 11-13M83 70h34M56 99l6 6 11-13M83 100h34M56 129l6 6 11-13M83 130h23" stroke="#0B786B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="132" cy="132" r="27" fill="#D9B65A"/>
+  <circle cx="132" cy="132" r="20" fill="#fff"/>
+  <path d="m122 132 7 7 14-16" stroke="#08766F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
