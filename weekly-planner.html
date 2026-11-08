@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>منظم المهام الأسبوعي | مجلة التوجيه الطلابي</title>
+  <style>
+    :root{--ink:#173d45;--muted:#5e7474;--teal:#12665f;--gold:#d8b14f;--paper:#f7f5ef;--line:#dce5df}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Tajawal,Arial,sans-serif}
+    .wrap{width:min(1100px,calc(100% - 32px));margin:auto;padding:30px 0 50px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+    .top a{color:var(--teal);font-weight:700;text-decoration:none}
+    header{text-align:center;margin:16px auto 28px}
+    header .tag{display:inline-block;padding:6px 13px;border-radius:99px;background:#e2f0e9;color:var(--teal);font-weight:700;font-size:13px}
+    h1{margin:10px 0;font-size:clamp(26px,5vw,42px)}
+    header p{margin:0;color:var(--muted);line-height:1.8}
+    .pages{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .page{min-width:0;padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 12px 32px #193b3210}
+    .page h2{margin:2px 0 12px;font-size:19px}
+    .page img{display:block;width:100%;height:auto;aspect-ratio:1.414;object-fit:contain;border:1px solid #e5ebe8;border-radius:10px;background:#f8faf9}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+    button,.download{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 14px;border:0;border-radius:11px;background:var(--teal);color:#fff;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+    .download{background:#e8f1ed;color:var(--teal)}
+    .note{margin:20px 0 0;padding:13px 16px;border-radius:13px;background:#fff8e6;color:#65552d;line-height:1.8;font-size:14px}
+    @media(max-width:720px){.pages{grid-template-columns:1fr}.wrap{width:min(100% - 22px,560px);padding-top:18px}.page{padding:12px}}
+    @page{size:A4 landscape;margin:0}
+    @media print{
+      body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .wrap{width:100%;margin:0;padding:0}
+      .top,header,.actions,.note{display:none!important}
+      .pages{display:block}
+      .page{display:none!important;margin:0;padding:0;border:0;border-radius:0;box-shadow:none}
+      body.print-page-1 #page-1,body.print-page-2 #page-2{display:block!important;width:100vw;height:100vh}
+      .page h2{display:none}
+      .page img{width:100vw;height:100vh;aspect-ratio:auto;object-fit:contain;border:0;border-radius:0}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top"><a href="index.html#gallery">← العودة إلى المجلة</a><span>مدرسة سلمان الفارسي الابتدائية</span></div>
+    <header><span class="tag">أداة تنظيمية للطالب والأسرة</span><h1>منظّم المهام الأسبوعي</h1><p>اختر صفحة المنظّم، ثم اطبعها أو نزّل صورتها للاستخدام خلال الفصل الدراسي.</p></header>
+    <section class="pages" aria-label="صفحات المنظم الأسبوعي">
+      <article class="page" id="page-1"><h2>الفصل الدراسي الأول</h2><img src="assets/weekly-planner-page-1.png" alt="منظم المهام الأسبوعي للفصل الدراسي الأول" loading="lazy"><div class="actions"><button type="button" onclick="printPlannerPage(1)">اطبع صورة الفصل الأول</button><a class="download" href="assets/weekly-planner-page-1.png" download="منظم-المهام-الأسبوعي-الفصل-الأول.png">نزّل الصورة</a></div></article>
+      <article class="page" id="page-2"><h2>الفصل الدراسي الثاني</h2><img src="assets/weekly-planner-page-2.png" alt="منظم المهام الأسبوعي للفصل الدراسي الثاني" loading="lazy"><div class="actions"><button type="button" onclick="printPlannerPage(2)">اطبع صورة الفصل الثاني</button><a class="download" href="assets/weekly-planner-page-2.png" download="منظم-المهام-الأسبوعي-الفصل-الثاني.png">نزّل الصورة</a></div></article>
+    </section>
+    <p class="note">لأفضل نتيجة، اختر ورق A4 بالاتجاه الأفقي من إعدادات الطباعة. ستُطبع الصفحة المختارة وحدها.</p>
+  </main>
+  <script>
+    function printPlannerPage(page){
+      document.body.classList.remove('print-page-1','print-page-2');
+      document.body.classList.add(`print-page-${page}`);
+      window.addEventListener('afterprint',()=>document.body.classList.remove(`print-page-${page}`),{once:true});
+      window.print();
+    }
+  </script>
+</body>
+</html>
