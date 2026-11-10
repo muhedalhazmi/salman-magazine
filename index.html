@@ -132,8 +132,8 @@
       {title:'الحماية الشخصية',slug:'safety',pages:19},
       {title:'الإرشاد وقت الأزمات',slug:'crises',pages:13},
       {title:'برنامج جسور للأسرة',slug:'bridges',pages:13},
-      {title:'الزي المدرسي',slug:'national-uniform',pages:1,image:'assets/announcements/previews/national-uniform.jpg'},
-      {title:'حفظ النعمة',slug:'save-blessings',pages:1,image:'assets/announcements/previews/save-blessings.jpg'}
+      {title:'الزي الرسمي',slug:'national-uniform',pages:9},
+      {title:'حفظ النعمة',slug:'save-blessings',pages:13}
     ];
     const valueGrid=document.getElementById('value-grid');
     function addDeckCards(deckList,grid,group,label){deckList.forEach(deck=>{const card=document.createElement('article');card.className='value-card';const button=document.createElement('button');button.className='value-open';button.type='button';button.dataset.group=group;button.dataset.slug=deck.slug;button.dataset.title=deck.title;button.dataset.pages=deck.pages;button.dataset.image=deck.image||'';const image=document.createElement('img');image.src=deck.image||`assets/${group}/slides/${deck.slug}/01.jpg`;image.alt=`غلاف ${label} ${deck.title}`;image.loading='lazy';const title=document.createElement('span');title.className='value-title';title.textContent=deck.title;button.append(image,title);const meta=document.createElement('div');meta.className='value-meta';meta.textContent=`${deck.pages} شريحة`;card.append(button,meta);grid.append(card)})}
