@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="description" content="تصفح إعلانات وبرامج مدرسة سلمان الفارسي الابتدائية، ورتبها من الأحدث إلى الأقدم أو العكس.">
+  <title>الإعلانات والبرامج | مجلة التوجيه الطلابي</title>
+  <style>
+    :root{--ink:#173744;--muted:#607580;--teal:#12665f;--mint:#dcefe8;--line:#dce5df;--paper:#f7f5ef;--shadow:0 8px 26px #193b3210}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#e7f3ee,#f7f5ef 50%,#eaf4f3);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.8}.wrap{width:min(1160px,calc(100% - 32px));margin:auto}.top{padding:20px 0}.back{display:inline-flex;padding:8px 13px;border:1px solid #c9ded6;border-radius:12px;background:#fff;color:var(--teal);font-weight:700}.heading{padding:12px 0 20px}.kicker{font-size:12px;color:var(--teal);font-weight:700}.heading h1{font-size:clamp(26px,4vw,36px);margin:2px 0}.heading p{margin:0;color:var(--muted)}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 18px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:#ffffffd9}.toolbar label{font-weight:700}.toolbar select{min-height:42px;padding:7px 12px;border:1px solid #b9d3c8;border-radius:10px;background:white;color:var(--ink);font:inherit}.announcement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.announcement-card{min-width:0;display:grid;grid-template-columns:150px minmax(0,1fr);align-items:center;gap:12px;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow)}.announcement-preview{display:block;width:150px;height:142px;overflow:hidden;background:#f0f5f3}.announcement-preview img{width:100%;height:100%;object-fit:contain}.announcement-gallery-card{grid-template-columns:minmax(190px,42%) minmax(0,1fr)}.announcement-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%;height:142px;background:#f0f5f3}.announcement-gallery a{min-width:0;overflow:hidden}.announcement-gallery img{width:100%;height:100%;object-fit:cover}.announcement-body{padding:12px}.tag{display:inline-block;border-radius:99px;padding:3px 10px;background:var(--mint);color:var(--teal);font-size:11px;font-weight:700}.announcement-body h2{font-size:17px;line-height:1.45;margin:5px 0 3px}.announcement-body p{font-size:12px;line-height:1.65;color:var(--muted);margin:0 0 9px}.announcement-links{display:flex;flex-wrap:wrap;gap:6px}.announcement-links a{display:inline-flex;border-radius:9px;background:var(--teal);color:#fff;padding:6px 9px;font-size:11px;font-weight:700}.status{margin:20px 0;padding:18px;text-align:center;border-radius:14px;background:#fff;color:var(--muted)}.status[hidden]{display:none}footer{margin-top:38px;padding:20px 0;text-align:center;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    @media(max-width:760px){.announcement-grid{grid-template-columns:1fr}.toolbar{align-items:flex-start;flex-direction:column}.toolbar select{width:100%}.announcement-card{grid-template-columns:150px minmax(0,1fr)}.announcement-gallery-card{grid-template-columns:160px minmax(0,1fr)}.announcement-gallery{grid-template-columns:1fr;height:142px}.announcement-gallery a:not(:first-child){display:none}}
+    @media(max-width:480px){.wrap{width:calc(100% - 22px)}.announcement-card{grid-template-columns:105px minmax(0,1fr);gap:8px}.announcement-preview{width:105px;height:126px}.announcement-gallery-card{grid-template-columns:105px minmax(0,1fr)}.announcement-gallery{width:105px;height:126px}.announcement-body{padding:8px}.announcement-body h2{font-size:15px}.announcement-body p{font-size:11px;margin-bottom:7px}.announcement-links{gap:4px}.announcement-links a{padding:5px 7px;font-size:10px}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><a class="back" href="index.html#announcements">← العودة إلى المجلة</a></div></header>
+  <main class="wrap">
+    <section class="heading"><span class="kicker">مدرسة سلمان الفارسي الابتدائية</span><h1>الإعلانات والبرامج</h1><p>أحدث الرسائل والمواد التوعوية المدرسية، مرتبة حسب تاريخ إضافتها إلى المجلة.</p></section>
+    <div class="toolbar"><label for="announcement-sort">ترتيب الإعلانات</label><select id="announcement-sort"><option value="newest">الأحدث إلى الأقدم</option><option value="oldest">الأقدم إلى الأحدث</option></select></div>
+    <p class="status" id="announcement-status" role="status">جارٍ تحميل الإعلانات…</p>
+    <section class="announcement-grid" id="announcement-list" aria-label="الإعلانات المدرسية"></section>
+  </main>
+  <footer><div class="wrap">مجلة التوجيه الطلابي · مدرسة سلمان الفارسي الابتدائية</div></footer>
+  <script>
+    (async function(){
+      const list=document.getElementById('announcement-list');
+      const status=document.getElementById('announcement-status');
+      const sort=document.getElementById('announcement-sort');
+      try{
+        const response=await fetch('index.html',{cache:'no-store'});
+        if(!response.ok) throw new Error('تعذر جلب الإعلانات');
+        const source=new DOMParser().parseFromString(await response.text(),'text/html');
+        const cards=[...source.querySelectorAll('#announcements .announcement-card')];
+        if(!cards.length) throw new Error('لا توجد إعلانات لعرضها');
+        cards.forEach((card,index)=>{card.dataset.sequence=String(index);});
+        function render(){
+          const ordered=[...cards].sort((a,b)=>sort.value==='oldest'?Number(b.dataset.sequence)-Number(a.dataset.sequence):Number(a.dataset.sequence)-Number(b.dataset.sequence));
+          list.replaceChildren(...ordered.map(card=>card.cloneNode(true)));
+          status.hidden=true;
+        }
+        sort.addEventListener('change',render);
+        render();
+      }catch(error){status.textContent='تعذر تحميل الإعلانات الآن. حاول تحديث الصفحة.';}
+    })();
+  </script>
+</body>
+</html>
