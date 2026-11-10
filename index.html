@@ -133,7 +133,7 @@
       {title:'العزيمة',slug:'determination',pages:16}
     ];
     const programDecks=[
-      {title:'تنمية الدافعية',slug:'motivation',pages:16,image:'assets/motivation.png',pdf:'assets/programs/motivation/motivation-development.pdf'},
+      {title:'تنمية الدافعية',slug:'motivation',pages:16,cover:'assets/programs/slides/motivation/01.jpg',pdf:'assets/programs/motivation/motivation-development.pdf'},
       {title:'التدخين والمخدرات',slug:'smoking',pages:18},
       {title:'خطر الألعاب الإلكترونية',slug:'games',pages:19},
       {title:'الحماية الشخصية',slug:'safety',pages:19},
@@ -144,7 +144,7 @@
       {title:'برنامج صون لحفظ الكتاب المدرسي',slug:'book-dignity',pages:13}
     ];
     const valueGrid=document.getElementById('value-grid');
-    function addDeckCards(deckList,grid,group,label){deckList.forEach(deck=>{const card=document.createElement('article');card.className='value-card';const button=document.createElement('button');button.className='value-open';button.type='button';button.dataset.group=group;button.dataset.slug=deck.slug;button.dataset.title=deck.title;button.dataset.pages=deck.pages;button.dataset.image=deck.image||'';button.dataset.pdf=deck.pdf||'';const image=document.createElement('img');image.src=deck.image||`assets/${group}/slides/${deck.slug}/01.jpg`;image.alt=`غلاف ${label} ${deck.title}`;image.loading='lazy';const title=document.createElement('span');title.className='value-title';title.textContent=deck.title;button.append(image,title);const meta=document.createElement('div');meta.className='value-meta';meta.textContent=deck.pdf?`عرض PDF · ${deck.pages} شريحة`:`${deck.pages} شريحة`;card.append(button,meta);grid.append(card)})}
+    function addDeckCards(deckList,grid,group,label){deckList.forEach(deck=>{const card=document.createElement('article');card.className='value-card';const button=document.createElement('button');button.className='value-open';button.type='button';button.dataset.group=group;button.dataset.slug=deck.slug;button.dataset.title=deck.title;button.dataset.pages=deck.pages;button.dataset.image=deck.image||'';button.dataset.pdf=deck.pdf||'';const image=document.createElement('img');image.src=deck.cover||deck.image||`assets/${group}/slides/${deck.slug}/01.jpg`;image.alt=`غلاف ${label} ${deck.title}`;image.loading='lazy';const title=document.createElement('span');title.className='value-title';title.textContent=deck.title;button.append(image,title);const meta=document.createElement('div');meta.className='value-meta';meta.textContent=deck.pdf?`عرض PDF · ${deck.pages} شريحة`:`${deck.pages} شريحة`;card.append(button,meta);grid.append(card)})}
     addDeckCards(valueDecks,valueGrid,'values','قيمة');
     addDeckCards(programDecks,document.getElementById('program-grid'),'programs','برنامج');
     const valueDialog=document.getElementById('value-dialog'),slideImage=document.getElementById('value-slide'),pageLabel=document.getElementById('slide-page');let currentPage=1,currentValue=null;
